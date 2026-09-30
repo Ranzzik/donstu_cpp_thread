@@ -77,13 +77,15 @@ int main() {
         oss << "T" << i;
         args[i].id = i;
         args[i].tag = oss.str();
+	args[i].message = "Hi from the threads" + args[i].tag;
     }
 
     for (int i = 0; i < COUNT_THREADS; ++i) {
         threads.emplace_back(std::thread([i, &args]() {
             for (int j = 0; j < COUNT_ITERATIONS; ++j) {
                 std::ostringstream ss;
-                ss << "[РќРёС‚СЊ: " << args[i].tag 
+                ss << "[РќРёС‚СЊ: " << args[i].tag
+		   << "[ | Message: " << args[i].message 
                    << "] РЁР°Рі: " << j
                    << " | Kernel TID: " << syscall(SYS_gettid)
                    << " | std::thread::id: " << std::this_thread::get_id();
@@ -103,11 +105,12 @@ int main() {
     }
     for (auto& t : counterThreads) t.join();
 
+
     logger.writeLine("--- Р РµР·СѓР»СЊС‚Р°С‚С‹ СЃС‡РµС‚С‡РёРєРѕРІ ---");
     logger.writeLine("РћР±С‹С‡РЅС‹Р№ int (Data Race): " + std::to_string(normalCounter));
     logger.writeLine("std::atomic<int>: " + std::to_string(atomicCounter));
 
-    ThreadArgs asyncArgs{88, "AsyncFuture"};
+    ThreadArgs asyncArgs{88, "AsyncFuture", "Message for async"};
     std::future<std::string> fut = std::async(std::launch::async, valueWorker, std::ref(asyncArgs));
     logger.writeLine("--- Р”Р°РЅРЅС‹Рµ РёР· future ---");
     logger.writeLine(fut.get());
