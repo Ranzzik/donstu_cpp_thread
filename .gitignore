@@ -2,3 +2,6 @@ app
 *.o
 output.log
 trace.log
+
+git add .gitignore Makefile
+git commit -m "Added gitignore and Makefile"

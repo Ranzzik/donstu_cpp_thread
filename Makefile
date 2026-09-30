@@ -10,4 +10,4 @@ run: app
 clean:
 	rm -f app output.log trace.log
 
-.PHONY: run clean
+.PHONY: run clean log
