@@ -5,19 +5,20 @@
 #include <atomic>
 
 inline constexpr int COUNT_THREADS = 4;
-inline constexpr int COUNT_ITERATIONS = 20; 
+inline constexpr int COUNT_ITERATIONS = 10000; 
 
 struct ThreadArgs {
     int id;
     std::string tag;
+    std::string message;
 };
 
 class Logger {
 public:
     explicit Logger(const std::string& filename);
     bool writeLine(const std::string& msg);
-    void toggleMutex(bool enable);
-
+    int toggleMutex(bool enable);
+// changed void in int
 private:
     std::ofstream file_;
     std::mutex mutex_;

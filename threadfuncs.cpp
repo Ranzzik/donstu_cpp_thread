@@ -9,8 +9,9 @@ Logger::Logger(const std::string& filename)
     if (!file_) throw std::runtime_error("РќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» Р»РѕРіР°!");
 }
 
-void Logger::toggleMutex(bool enable) {
+int Logger::toggleMutex(bool enable) {
     useMutex_ = enable;
+    return 0;
 }
 
 bool Logger::writeLine(const std::string& msg) {
@@ -24,5 +25,7 @@ bool Logger::writeLine(const std::string& msg) {
     if (!file_) return false;
     file_ << msg << "\n";
     file_.flush();
-    return true;
+    return 0;
 }
+
+//test
